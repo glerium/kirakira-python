@@ -102,8 +102,9 @@ async def get_group_bindings() -> dict[str, list[str]]:
         await cursor.execute("SELECT codeforces_id, group_id FROM group_user")
         result: dict[str, list[str]] = defaultdict(list)
         for cf_id, group_id in await cursor.fetchall():
-            if str(group_id) not in result[str(cf_id)]:
-                result[str(cf_id)].append(str(group_id))
+            key = str(cf_id).lower()
+            if str(group_id) not in result[key]:
+                result[key].append(str(group_id))
         return dict(result)
 
 
