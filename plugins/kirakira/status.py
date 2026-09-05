@@ -28,7 +28,6 @@ async def get_status_message(bot_id: str) -> str:
     process_rss = psutil.Process(os.getpid()).memory_info().rss
     uptime = _format_duration(time.monotonic() - STARTED_AT)
     return (
-        "KiraKira 状态\n"
         f"机器人在线：是（QQ {bot_id}）\n"
         f"在线时间：{uptime}\n"
         f"系统 CPU：{cpu_percent:.1f}%\n"
