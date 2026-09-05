@@ -11,6 +11,7 @@ class Config(BaseModel):
     onebot_access_token: str = ""
     kirakira_admin_group_id: str = ""
     kirakira_enable_scheduler: bool = False
+    kirakira_enable_course_reminder: bool = False
     codeforces_timeout_seconds: float = Field(default=15.0, gt=0)
 
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 from collections import defaultdict
-from datetime import datetime
+from datetime import date, datetime
 
 import asyncmy
 
@@ -156,3 +156,91 @@ async def get_bindings_in_group(group_id: str) -> list[tuple[str, str]]:
             (group_id,),
         )
         return [(str(user_id), str(cf_id)) for user_id, cf_id in await cursor.fetchall()]
+
+
+async def add_class_subscription(group_id: str, target: str) -> str:
+    pool = _require_pool()
+    normalized_target = "all" if target.lower() == "all" else target
+    async with pool.acquire() as conn, conn.cursor() as cursor:
+        if normalized_target == "all":
+            await cursor.execute(
+                "DELETE FROM subscription WHERE group_id=%s AND subscription_type='class'",
+                (group_id,),
+            )
+            await cursor.execute(
+                "INSERT IGNORE INTO subscription (group_id, subscription_type, target) "
+                "VALUES (%s, 'class', 'all')",
+                (group_id,),
+            )
+            return "all"
+        await cursor.execute(
+            "SELECT 1 FROM subscription WHERE group_id=%s AND subscription_type='class' "
+            "AND target='all' LIMIT 1",
+            (group_id,),
+        )
+        if await cursor.fetchone():
+            return "covered"
+        await cursor.execute(
+            "INSERT IGNORE INTO subscription (group_id, subscription_type, target) "
+            "VALUES (%s, 'class', %s)",
+            (group_id, normalized_target),
+        )
+        return "teacher" if cursor.rowcount else "exists"
+
+
+async def remove_subscription(group_id: str, subscription_type: str, target: str) -> bool:
+    pool = _require_pool()
+    normalized_target = "all" if target.lower() == "all" else target
+    async with pool.acquire() as conn, conn.cursor() as cursor:
+        await cursor.execute(
+            "DELETE FROM subscription WHERE group_id=%s AND subscription_type=%s AND target=%s",
+            (group_id, subscription_type, normalized_target),
+        )
+        return cursor.rowcount > 0
+
+
+async def list_subscriptions(group_id: str, subscription_type: str) -> list[str]:
+    pool = _require_pool()
+    async with pool.acquire() as conn, conn.cursor() as cursor:
+        await cursor.execute(
+            "SELECT target FROM subscription WHERE group_id=%s AND subscription_type=%s ORDER BY target",
+            (group_id, subscription_type),
+        )
+        return [str(row[0]) for row in await cursor.fetchall()]
+
+
+async def get_course_subscriber_groups(teachers: tuple[str, ...]) -> list[str]:
+    pool = _require_pool()
+    placeholders = ", ".join(["%s"] * len(teachers))
+    query = (
+        "SELECT DISTINCT group_id FROM subscription WHERE subscription_type='class' "
+        f"AND (target='all' OR target IN ({placeholders}))"
+    )
+    async with pool.acquire() as conn, conn.cursor() as cursor:
+        await cursor.execute(query, teachers)
+        return [str(row[0]) for row in await cursor.fetchall()]
+
+
+async def course_reminder_sent(
+    group_id: str, course_id: str, class_date: date, start_period: int
+) -> bool:
+    pool = _require_pool()
+    async with pool.acquire() as conn, conn.cursor() as cursor:
+        await cursor.execute(
+            "SELECT 1 FROM course_reminder_log WHERE group_id=%s AND course_id=%s "
+            "AND class_date=%s AND start_period=%s LIMIT 1",
+            (group_id, course_id, class_date, start_period),
+        )
+        return bool(await cursor.fetchone())
+
+
+async def mark_course_reminder_sent(
+    group_id: str, course_id: str, class_date: date, start_period: int
+) -> None:
+    pool = _require_pool()
+    async with pool.acquire() as conn, conn.cursor() as cursor:
+        await cursor.execute(
+            "INSERT IGNORE INTO course_reminder_log (group_id, course_id, class_date, start_period) "
+            "VALUES (%s, %s, %s, %s)",
+            (group_id, course_id, class_date, start_period),
+        )

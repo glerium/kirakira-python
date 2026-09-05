@@ -40,3 +40,21 @@ Windows 上可直接运行 run.bat。
 2. 停止旧 Java scheduler，确认 Python 命令、数据库读取及一次手动监控均正常。
 3. 更新 NapCat 的反向 WebSocket 与新 token，再将 KIRAKIRA_ENABLE_SCHEDULER=true。
 4. 保留旧 Java 工程作为回退，不删除数据或安装目录。
+
+## 课程提醒
+
+课表位于 plugins/kirakira/data/。2026 秋季学期第 1 周从 2026-08-31 开始，按 Asia/Shanghai 时区计算；课程开始前 15 分钟提醒。
+
+群管理员或群主可使用：
+
+- /subscribe class all
+- /subscribe class [老师姓名]
+- /unsubscribe class all/[老师姓名]
+
+所有群成员可使用 /subscriptions class 查看本群课程订阅。class all 会覆盖老师订阅；全量订阅存在时不能新增单独老师订阅。
+
+部署前需由管理员显式执行 migrations/001_course_reminder.sql，它只创建 subscription 与 course_reminder_log 两张新表，不会修改旧表。验证订阅命令与一次手动提醒后，再在部署机 .env 设置：
+
+KIRAKIRA_ENABLE_COURSE_REMINDER=true
+
+重启 Python 服务后，调度器每分钟检查一次，并以发送日志避免重复提醒。

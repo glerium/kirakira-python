@@ -255,6 +255,7 @@ dependencies = [
     { name = "nonebot-plugin-tsugu-bangdream-bot" },
     { name = "nonebot2", extra = ["fastapi"] },
     { name = "psutil" },
+    { name = "pyyaml" },
 ]
 
 [package.dev-dependencies]
@@ -273,6 +274,7 @@ requires-dist = [
     { name = "nonebot-plugin-tsugu-bangdream-bot", specifier = ">=0.4.6" },
     { name = "nonebot2", extras = ["fastapi"], specifier = ">=2.5.0" },
     { name = "psutil", specifier = ">=7.2.2" },
+    { name = "pyyaml", specifier = ">=6.0.3" },
 ]
 
 [package.metadata.requires-dev]

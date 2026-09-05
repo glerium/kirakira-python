@@ -1,0 +1,470 @@
+semester:
+  name: 2026秋季学期
+  start_date: '2026-08-31'
+  total_weeks: 18
+  timezone: Asia/Shanghai
+  period_table: periods_summer.yaml
+weekday_mapping:
+  1: 周一
+  2: 周二
+  3: 周三
+  4: 周四
+  5: 周五
+  6: 周六
+  7: 周日
+courses:
+- id: course-001
+  name: 数据结构与算法
+  reservation_required: false
+  class_name: 24自动化[01-02]班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 王睿鑫
+  weeks:
+  - 2
+  sessions:
+  - weekday: 5
+    start_period: 5
+    end_period: 6
+  - weekday: 5
+    start_period: 7
+    end_period: 8
+  capacity: 100
+  group_count: 1
+- id: course-002
+  name: 数据结构与算法
+  reservation_required: false
+  class_name: 24自动化[01-02]班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 王睿鑫
+  weeks:
+  - 11
+  sessions:
+  - weekday: 5
+    start_period: 5
+    end_period: 6
+  - weekday: 5
+    start_period: 7
+    end_period: 8
+  capacity: 100
+  group_count: 1
+- id: course-003
+  name: 数据结构与算法
+  reservation_required: false
+  class_name: 24自动化[01-02]班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 王睿鑫
+  weeks:
+  - 15
+  - 16
+  - 17
+  - 18
+  sessions:
+  - weekday: 5
+    start_period: 1
+    end_period: 2
+  capacity: 100
+  group_count: 1
+- id: course-004
+  name: 数据结构与算法
+  reservation_required: false
+  class_name: 24自动化[01-02]班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 王睿鑫
+  weeks:
+  - 18
+  sessions:
+  - weekday: 5
+    start_period: 5
+    end_period: 6
+  capacity: 100
+  group_count: 1
+- id: course-005
+  name: 数据结构与算法
+  reservation_required: false
+  class_name: 24自动化[01-02]班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 王睿鑫
+  weeks:
+  - 4
+  sessions:
+  - weekday: 5
+    start_period: 7
+    end_period: 8
+  capacity: 100
+  group_count: 1
+- id: course-006
+  name: 人工智能引论
+  reservation_required: false
+  class_name: 25计算机[01-03]班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 姚越
+  - 徐东亮
+  weeks:
+  - 3
+  - 5
+  - 7
+  - 9
+  sessions:
+  - weekday: 5
+    start_period: 1
+    end_period: 2
+  - weekday: 5
+    start_period: 3
+    end_period: 4
+  - weekday: 5
+    start_period: 5
+    end_period: 6
+  - weekday: 5
+    start_period: 7
+    end_period: 8
+  capacity: 125
+  group_count: 1
+- id: course-007
+  name: 人工智能引论
+  reservation_required: false
+  class_name: 25计算机[01-03]班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 姚越
+  - 徐东亮
+  weeks:
+  - 2
+  sessions:
+  - weekday: 3
+    start_period: 3
+    end_period: 4
+  - weekday: 3
+    start_period: 5
+    end_period: 6
+  capacity: 125
+  group_count: 1
+- id: course-008
+  name: 实践与综合设计
+  reservation_required: false
+  class_name: 23自动化[01-02]班
+  lab_hours: 32
+  location: 知行南楼505-507
+  teachers:
+  - 程昀
+  weeks:
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  sessions:
+  - weekday: 3
+    start_period: 7
+    end_period: 8
+  capacity: 92
+  group_count: 1
+- id: course-009
+  name: 高级程序设计语言
+  reservation_required: false
+  class_name: 26电子类[11-12]班
+  lab_hours: 30
+  location: 知行南楼505-507
+  teachers:
+  - 刘勇
+  - 王侃
+  - 孔黄海
+  weeks:
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  sessions:
+  - weekday: 1
+    start_period: 9
+    end_period: 10
+  capacity: 100
+  group_count: 1
+- id: course-010
+  name: 数据结构与算法
+  reservation_required: false
+  class_name: 24自动化[01-02]班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 王睿鑫
+  weeks:
+  - 4
+  sessions:
+  - weekday: 5
+    start_period: 5
+    end_period: 6
+  capacity: 100
+  group_count: 1
+- id: course-011
+  name: 数据结构与算法
+  reservation_required: false
+  class_name: 24自动化[01-02]班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 王睿鑫
+  weeks:
+  - 13
+  - 15
+  - 17
+  sessions:
+  - weekday: 3
+    start_period: 3
+    end_period: 4
+  capacity: 100
+  group_count: 1
+- id: course-012
+  name: 机器学习与模式识别
+  reservation_required: false
+  class_name: 25计算机[01-06]班、25未来网络班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 李象贤
+  weeks:
+  - 9
+  - 11
+  - 13
+  sessions:
+  - weekday: 7
+    start_period: 5
+    end_period: 6
+  - weekday: 7
+    start_period: 7
+    end_period: 8
+  - weekday: 7
+    start_period: 9
+    end_period: 11
+  capacity: 100
+  group_count: 1
+- id: course-013
+  name: 数据库系统
+  reservation_required: false
+  class_name: 25未来网络班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 王文玉
+  - 衣振萍
+  weeks:
+  - 13
+  - 15
+  - 16
+  sessions:
+  - weekday: 6
+    start_period: 5
+    end_period: 6
+  - weekday: 6
+    start_period: 7
+    end_period: 8
+  capacity: 30
+  group_count: 1
+- id: course-014
+  name: Java程序设计
+  reservation_required: false
+  class_name: 24电子[01-02]班、24通信[01-02]班、24量子信息班
+  lab_hours: 18
+  location: 知行南楼505-507
+  teachers:
+  - 丛小茗
+  - 刘娟
+  weeks:
+  - 15
+  - 17
+  sessions:
+  - weekday: 5
+    start_period: 7
+    end_period: 8
+  capacity: 1
+  group_count: 1
+- id: course-015
+  name: 高级程序设计语言
+  reservation_required: false
+  class_name: 26电子类[13-14]班
+  lab_hours: 30
+  location: 知行南楼505-507
+  teachers:
+  - 刘勇
+  - 孔黄海
+  - 王侃
+  weeks:
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  sessions:
+  - weekday: 5
+    start_period: 9
+    end_period: 10
+  capacity: 100
+  group_count: 1
+- id: course-016
+  name: Python编程
+  reservation_required: false
+  class_name: 25机器人[01-03]班
+  lab_hours: 24
+  location: 知行南楼505-507
+  teachers:
+  - 袁宪锋
+  - 梁莹
+  weeks:
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  sessions:
+  - weekday: 3
+    start_period: 9
+    end_period: 11
+  capacity: 79
+  group_count: 1
+- id: course-017
+  name: 计算机图形学
+  reservation_required: false
+  class_name: 24人工智能[01-02]班、24未来网络班
+  lab_hours: 36
+  location: 知行南楼505-507
+  teachers:
+  - 杨飞
+  weeks:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  sessions:
+  - weekday: 4
+    start_period: 9
+    end_period: 10
+  capacity: 139
+  group_count: 1
+- id: course-018
+  name: Java程序设计
+  reservation_required: false
+  class_name: 24电子[01-02]班、24通信[01-02]班、24量子信息班
+  lab_hours: 18
+  location: 知行南楼505-507
+  teachers:
+  - 丛小茗
+  - 刘娟
+  weeks:
+  - 6
+  - 8
+  - 10
+  - 12
+  - 14
+  - 16
+  - 18
+  sessions:
+  - weekday: 5
+    start_period: 7
+    end_period: 8
+  capacity: 1
+  group_count: 1
+- id: course-019
+  name: 劳动实践Ⅱ（劳育）注：机械臂控制与实践
+  reservation_required: true
+  class_name: 全校通选
+  lab_hours: 16
+  location: 知行南楼505-507
+  teachers:
+  - 巩志
+  weeks:
+  - 5
+  - 6
+  - 7
+  - 8
+  sessions:
+  - weekday: 6
+    start_period: 5
+    end_period: 6
+  - weekday: 6
+    start_period: 7
+    end_period: 8
+  capacity: 47
+  group_count: 1
+- id: course-020
+  name: 劳动实践Ⅱ（劳育）注：机械臂控制与实践
+  reservation_required: true
+  class_name: 全校通选
+  lab_hours: 16
+  location: 知行南楼505-507
+  teachers:
+  - 巩志
+  weeks:
+  - 5
+  - 6
+  - 7
+  - 8
+  sessions:
+  - weekday: 6
+    start_period: 1
+    end_period: 2
+  - weekday: 6
+    start_period: 3
+    end_period: 4
+  capacity: 41
+  group_count: 1

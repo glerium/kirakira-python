@@ -17,7 +17,8 @@ HELP_TEXT = (
     "/unbind cf [codeforces_id]: 解绑CF账号\n"
     "/list cf: 列出自己绑定的CF账号\n"
     "/listall cf: 列出所有人绑定的CF账号\n"
-    "/help tsugu: 查看 Tsugu 指令"
+    "/help tsugu: 查看 Tsugu 指令\n"
+    "/subscribe class all/[老师姓名]: 订阅课程提醒"
 )
 
 TSUGU_HELP_TEXT = (

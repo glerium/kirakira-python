@@ -1,6 +1,8 @@
 from nonebot import get_driver
 
 from . import commands as commands
+from . import course_commands as course_commands
+from . import course_reminder as course_reminder
 from . import monitor as monitor
 from .codeforces import CodeforcesClient
 from .config import get_config
