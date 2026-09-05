@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import re
 
+from .status import get_status_message
+
 from nonebot import on_command
 from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, Message
 from nonebot.params import CommandArg
@@ -11,10 +13,12 @@ from .codeforces import CodeforcesError, CodeforcesUserNotFound
 
 HANDLE_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 HELP_TEXT = (
+    "/status: 查看机器人状态\n"
     "/bind cf [codeforces_id]: 绑定CF账号\n"
     "/unbind cf [codeforces_id]: 解绑CF账号\n"
     "/list cf: 列出自己绑定的CF账号\n"
-    "/listall cf: 列出所有人绑定的CF账号"
+    "/listall cf: 列出所有人绑定的CF账号\n"
+    "/help tsugu: 查看 Tsugu / BanG Dream 指令"
 )
 
 TSUGU_HELP_TEXT = (
@@ -43,12 +47,18 @@ def is_group_admin(role: str) -> bool:
     return role in {"admin", "owner"}
 
 
+status_command = on_command("status", priority=10, block=True)
 ping = on_command("ping", priority=10, block=True)
 
 
+@status_command.handle()
+async def handle_status(bot: Bot) -> None:
+    await status_command.finish(await get_status_message(str(bot.self_id)))
+
+
 @ping.handle()
-async def handle_ping() -> None:
-    await ping.finish("pong")
+async def handle_ping(bot: Bot) -> None:
+    await ping.finish(await get_status_message(str(bot.self_id)))
 
 
 help_command = on_command("help", priority=10, block=True)
@@ -56,8 +66,11 @@ help_command = on_command("help", priority=10, block=True)
 
 @help_command.handle()
 async def handle_help(args: Message = CommandArg()) -> None:
-    if args.extract_plain_text().strip().lower() == "tsugu":
+    help_arg = args.extract_plain_text().strip().lower()
+    if help_arg == "tsugu":
         await help_command.finish(TSUGU_HELP_TEXT)
+    if help_arg:
+        help_command.skip()
     await help_command.finish(HELP_TEXT)
 
 
