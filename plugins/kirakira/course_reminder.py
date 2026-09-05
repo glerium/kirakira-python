@@ -13,13 +13,9 @@ from .course_schedule import Occurrence, load_schedule
 def format_reminder(occurrence: Occurrence) -> str:
     course = occurrence.course
     return (
-        "📚 课程提醒\n\n"
-        f"15 分钟后上课：\n{course.name}\n\n"
-        f"教师：{'、'.join(course.teachers)}\n"
-        f"时间：{occurrence.start_at:%H:%M}–{occurrence.end_at:%H:%M}（第{occurrence.start_period}-{occurrence.end_period}节）\n"
-        f"地点：{course.location}\n"
-        f"教学周：第{occurrence.week}周\n"
-        f"班级：{course.class_name}"
+        f"507上课提醒：15分钟后是{'、'.join(course.teachers)}老师的{course.name}，"
+        f"上课时间为{occurrence.start_at:%H:%M}-{occurrence.end_at:%H:%M}，"
+        f"班级为{course.class_name}，请注意安排实验室使用时间。"
     )
 
 

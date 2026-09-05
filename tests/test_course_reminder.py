@@ -20,6 +20,7 @@ def test_reminder_message_contains_course_details() -> None:
         1,
     )
     message = format_reminder(occurrence)
-    assert "15 分钟后上课" in message
-    assert "16:10–18:00（第7-8节）" in message
-    assert "老师甲、老师乙" in message
+    assert message == (
+        "507上课提醒：15分钟后是老师甲、老师乙老师的测试课程，"
+        "上课时间为16:10-18:00，班级为测试班，请注意安排实验室使用时间。"
+    )
