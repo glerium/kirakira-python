@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from nonebot import on_command
-from nonebot.adapters.onebot.v11 import GroupMessageEvent, Message
+from nonebot.adapters.onebot.v11 import GROUP, GroupMessageEvent, Message
 from nonebot.params import CommandArg
 
 from . import database
@@ -14,9 +14,9 @@ def parse_subscription_args(args: str, count: int) -> list[str] | None:
     return parts if len(parts) == count else None
 
 
-subscribe = on_command("subscribe", priority=10, block=True)
-unsubscribe = on_command("unsubscribe", priority=10, block=True)
-subscriptions = on_command("subscriptions", priority=10, block=True)
+subscribe = on_command("subscribe", permission=GROUP, priority=10, block=True)
+unsubscribe = on_command("unsubscribe", permission=GROUP, priority=10, block=True)
+subscriptions = on_command("subscriptions", permission=GROUP, priority=10, block=True)
 
 
 async def _require_admin(event: GroupMessageEvent, matcher: object) -> None:
