@@ -9,7 +9,7 @@ from nonebot import get_bots, logger
 from nonebot_plugin_apscheduler import scheduler
 
 from . import database
-from .codeforces import CodeforcesError, CodeforcesUserNotFound, Submission, CodeforcesClient
+from .codeforces import CodeforcesClient, CodeforcesError, CodeforcesUserNotFound
 from .config import get_config
 
 

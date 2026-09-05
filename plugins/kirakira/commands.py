@@ -2,14 +2,13 @@ from __future__ import annotations
 
 import re
 
-from .status import get_status_message
-
 from nonebot import on_command
 from nonebot.adapters.onebot.v11 import Bot, GroupMessageEvent, Message
 from nonebot.params import CommandArg
 
 from . import database
 from .codeforces import CodeforcesError, CodeforcesUserNotFound
+from .status import get_status_message
 
 HANDLE_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 HELP_TEXT = (

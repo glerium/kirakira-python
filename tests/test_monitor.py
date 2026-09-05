@@ -65,7 +65,9 @@ async def test_monitor_reports_errors_without_submission() -> None:
     await check_submissions(
         bot,
         repo,
-        FakeClient({"missing": CodeforcesUserNotFound("missing"), "broken": CodeforcesError("timeout")}),
+        FakeClient(
+            {"missing": CodeforcesUserNotFound("missing"), "broken": CodeforcesError("timeout")}
+        ),
         admin_group_id="99",
     )
     assert repo.removed == ["missing"]

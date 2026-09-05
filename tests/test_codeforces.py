@@ -21,11 +21,20 @@ def make_client(payload: object, status_code: int = 200) -> CodeforcesClient:
 @pytest.mark.asyncio
 async def test_recent_accepted_and_team_handle() -> None:
     now = int(time.time())
-    client = make_client({"status": "OK", "result": [{
-        "id": 1, "verdict": "OK", "creationTimeSeconds": now,
-        "problem": {"contestId": 1000, "index": "A", "rating": 800},
-        "author": {"members": [{"handle": "Tourist"}, {"handle": "friend"}]},
-    }]})
+    client = make_client(
+        {
+            "status": "OK",
+            "result": [
+                {
+                    "id": 1,
+                    "verdict": "OK",
+                    "creationTimeSeconds": now,
+                    "problem": {"contestId": 1000, "index": "A", "rating": 800},
+                    "author": {"members": [{"handle": "Tourist"}, {"handle": "friend"}]},
+                }
+            ],
+        }
+    )
     result = await client.get_recent_accepted("tourist")
     assert result[0].problem_id == "1000A"
     assert result[0].display_handle == "Tourist"
@@ -34,12 +43,25 @@ async def test_recent_accepted_and_team_handle() -> None:
 
 @pytest.mark.asyncio
 async def test_old_and_non_ok_submissions_are_ignored() -> None:
-    client = make_client({"status": "OK", "result": [
-        {"id": 1, "verdict": "OK", "creationTimeSeconds": int(time.time()) - 1900,
-         "problem": {"contestId": 1, "index": "A"}},
-        {"id": 2, "verdict": "WRONG_ANSWER", "creationTimeSeconds": int(time.time()),
-         "problem": {"contestId": 1, "index": "B"}},
-    ]})
+    client = make_client(
+        {
+            "status": "OK",
+            "result": [
+                {
+                    "id": 1,
+                    "verdict": "OK",
+                    "creationTimeSeconds": int(time.time()) - 1900,
+                    "problem": {"contestId": 1, "index": "A"},
+                },
+                {
+                    "id": 2,
+                    "verdict": "WRONG_ANSWER",
+                    "creationTimeSeconds": int(time.time()),
+                    "problem": {"contestId": 1, "index": "B"},
+                },
+            ],
+        }
+    )
     assert await client.get_recent_accepted("tourist") == []
     await client.close()
 

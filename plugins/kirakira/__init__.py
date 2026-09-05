@@ -1,6 +1,7 @@
 from nonebot import get_driver
 
-from . import commands, monitor
+from . import commands as commands
+from . import monitor as monitor
 from .codeforces import CodeforcesClient
 from .config import get_config
 from .database import close_pool, init_pool

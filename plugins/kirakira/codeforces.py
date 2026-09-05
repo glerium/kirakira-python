@@ -79,7 +79,10 @@ class CodeforcesClient:
         author = item.get("author")
         members = author.get("members", []) if isinstance(author, dict) else []
         for member in members:
-            if isinstance(member, dict) and str(member.get("handle", "")).lower() == requested_handle.lower():
+            if (
+                isinstance(member, dict)
+                and str(member.get("handle", "")).lower() == requested_handle.lower()
+            ):
                 display_handle = str(member["handle"])
                 break
 

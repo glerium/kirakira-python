@@ -15,9 +15,15 @@ _binding_lock = asyncio.Lock()
 async def init_pool(config: Config) -> None:
     global _pool
     _pool = await asyncmy.create_pool(
-        host=config.mysql_host, port=config.mysql_port, user=config.mysql_user,
-        password=config.mysql_password, db=config.mysql_database, autocommit=True,
-        minsize=1, maxsize=5, charset="utf8mb4",
+        host=config.mysql_host,
+        port=config.mysql_port,
+        user=config.mysql_user,
+        password=config.mysql_password,
+        db=config.mysql_database,
+        autocommit=True,
+        minsize=1,
+        maxsize=5,
+        charset="utf8mb4",
     )
 
 
@@ -105,7 +111,8 @@ async def get_groups_by_cf_id(cf_id: str) -> list[str]:
     pool = _require_pool()
     async with pool.acquire() as conn, conn.cursor() as cursor:
         await cursor.execute(
-            "SELECT DISTINCT group_id FROM group_user WHERE LOWER(codeforces_id)=LOWER(%s)", (cf_id,)
+            "SELECT DISTINCT group_id FROM group_user WHERE LOWER(codeforces_id)=LOWER(%s)",
+            (cf_id,),
         )
         return [str(row[0]) for row in await cursor.fetchall()]
 
@@ -120,7 +127,9 @@ async def user_finished_problem(cf_id: str, problem_id: str) -> bool:
         return await cursor.fetchone() is not None
 
 
-async def insert_submission(cf_id: str, problem_id: str, submission_id: str, submission_time: datetime) -> None:
+async def insert_submission(
+    cf_id: str, problem_id: str, submission_id: str, submission_time: datetime
+) -> None:
     pool = _require_pool()
     async with pool.acquire() as conn, conn.cursor() as cursor:
         await cursor.execute(
@@ -132,7 +141,10 @@ async def insert_submission(cf_id: str, problem_id: str, submission_id: str, sub
 async def remove_invalid_cf_id(cf_id: str) -> None:
     pool = _require_pool()
     async with pool.acquire() as conn, conn.cursor() as cursor:
-        await cursor.execute("DELETE FROM group_user WHERE LOWER(codeforces_id)=LOWER(%s)", (cf_id,))
+        await cursor.execute(
+            "DELETE FROM group_user WHERE LOWER(codeforces_id)=LOWER(%s)", (cf_id,)
+        )
+
 
 async def get_bindings_in_group(group_id: str) -> list[tuple[str, str]]:
     pool = _require_pool()
