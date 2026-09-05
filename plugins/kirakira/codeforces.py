@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from dataclasses import dataclass
 from time import time
 from typing import Any
@@ -25,18 +26,32 @@ class Submission:
 
 
 class CodeforcesClient:
-    def __init__(self, timeout_seconds: float = 15.0) -> None:
+    def __init__(
+        self, timeout_seconds: float = 15.0, request_interval_seconds: float = 2.0
+    ) -> None:
         self._client = httpx.AsyncClient(
             base_url="https://codeforces.com/api/",
             timeout=httpx.Timeout(timeout_seconds),
         )
+        self._rate_limit_lock = asyncio.Lock()
+        self._next_request_at = 0.0
+        self._request_interval_seconds = request_interval_seconds
+
+    async def _get(self, path: str, *, params: dict[str, object]) -> httpx.Response:
+        async with self._rate_limit_lock:
+            loop = asyncio.get_running_loop()
+            delay = self._next_request_at - loop.time()
+            if delay > 0:
+                await asyncio.sleep(delay)
+            self._next_request_at = loop.time() + self._request_interval_seconds
+        return await self._client.get(path, params=params)
 
     async def close(self) -> None:
         await self._client.aclose()
 
     async def get_recent_accepted(self, handle: str) -> list[Submission]:
         try:
-            response = await self._client.get(
+            response = await self._get(
                 "user.status",
                 params={"handle": handle, "from": 1, "count": 10},
             )

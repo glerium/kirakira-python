@@ -3,14 +3,17 @@ import time
 import httpx
 import pytest
 
+from plugins.kirakira import codeforces
 from plugins.kirakira.codeforces import CodeforcesClient, CodeforcesError, CodeforcesUserNotFound
 
 
-def make_client(payload: object, status_code: int = 200) -> CodeforcesClient:
+def make_client(
+    payload: object, status_code: int = 200, request_interval_seconds: float = 0.0
+) -> CodeforcesClient:
     async def handler(_: httpx.Request) -> httpx.Response:
         return httpx.Response(status_code, json=payload)
 
-    client = CodeforcesClient()
+    client = CodeforcesClient(request_interval_seconds=request_interval_seconds)
     client._client = httpx.AsyncClient(
         base_url="https://codeforces.com/api/",
         transport=httpx.MockTransport(handler),
@@ -77,3 +80,21 @@ async def test_user_not_found_and_api_failed() -> None:
     with pytest.raises(CodeforcesError):
         await failed.get_recent_accepted("x")
     await failed.close()
+
+
+@pytest.mark.asyncio
+async def test_requests_are_globally_rate_limited(monkeypatch) -> None:
+    client = make_client({"status": "OK", "result": []}, request_interval_seconds=2.0)
+    delays: list[float] = []
+
+    async def fake_sleep(delay: float) -> None:
+        delays.append(delay)
+
+    monkeypatch.setattr(codeforces.asyncio, "sleep", fake_sleep)
+
+    await client.get_recent_accepted("first")
+    await client.get_recent_accepted("second")
+
+    assert len(delays) == 1
+    assert delays[0] >= 1.9
+    await client.close()
