@@ -10,10 +10,16 @@ from .config import get_config
 from .course_schedule import Occurrence, load_schedule
 
 
-def format_reminder(occurrence: Occurrence) -> str:
+def ordered_teachers(teachers: tuple[str, ...], targets: set[str]) -> tuple[str, ...]:
+    preferred = tuple(teacher for teacher in teachers if teacher in targets)
+    return preferred + tuple(teacher for teacher in teachers if teacher not in targets)
+
+
+def format_reminder(occurrence: Occurrence, teachers: tuple[str, ...] | None = None) -> str:
     course = occurrence.course
+    display_teachers = teachers or course.teachers
     return (
-        f"507上课提醒：15分钟后是{'、'.join(course.teachers)}老师的{course.name}，"
+        f"507上课提醒：15分钟后是{'、'.join(display_teachers)}老师的{course.name}，"
         f"上课时间为{occurrence.start_at:%H:%M}-{occurrence.end_at:%H:%M}，"
         f"班级为{course.class_name}，请注意安排实验室使用时间。"
     )
@@ -29,8 +35,8 @@ async def run_course_reminders(now: datetime | None = None) -> None:
     bot = next(iter(bots.values()))
     schedule = load_schedule()
     for occurrence in schedule.reminder_due(now or datetime.now(schedule.timezone)):
-        groups = await database.get_course_subscriber_groups(occurrence.course.teachers)
-        for group_id in groups:
+        subscribers = await database.get_course_subscribers(occurrence.course.teachers)
+        for group_id, targets in subscribers.items():
             if await database.course_reminder_sent(
                 group_id,
                 occurrence.course.course_id,
@@ -40,7 +46,10 @@ async def run_course_reminders(now: datetime | None = None) -> None:
                 continue
             try:
                 await bot.send_group_msg(
-                    group_id=int(group_id), message=format_reminder(occurrence)
+                    group_id=int(group_id),
+                    message=format_reminder(
+                        occurrence, ordered_teachers(occurrence.course.teachers, targets)
+                    ),
                 )
             except Exception:  # noqa: BLE001 - one failed group must not stop reminders
                 logger.exception("Failed to send course reminder to group %s", group_id)

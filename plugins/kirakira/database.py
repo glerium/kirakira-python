@@ -244,3 +244,18 @@ async def mark_course_reminder_sent(
             "VALUES (%s, %s, %s, %s)",
             (group_id, course_id, class_date, start_period),
         )
+
+
+async def get_course_subscribers(teachers: tuple[str, ...]) -> dict[str, set[str]]:
+    pool = _require_pool()
+    placeholders = ", ".join(["%s"] * len(teachers))
+    query = (
+        "SELECT group_id, target FROM subscription WHERE subscription_type='class' "
+        f"AND (target='all' OR target IN ({placeholders}))"
+    )
+    result: dict[str, set[str]] = defaultdict(set)
+    async with pool.acquire() as conn, conn.cursor() as cursor:
+        await cursor.execute(query, teachers)
+        for group_id, target in await cursor.fetchall():
+            result[str(group_id)].add(str(target))
+    return dict(result)

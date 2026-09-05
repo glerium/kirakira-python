@@ -1,6 +1,6 @@
 from datetime import date, datetime
 
-from plugins.kirakira.course_reminder import format_reminder
+from plugins.kirakira.course_reminder import format_reminder, ordered_teachers
 from plugins.kirakira.course_schedule import Course, Occurrence
 
 
@@ -23,4 +23,12 @@ def test_reminder_message_contains_course_details() -> None:
     assert message == (
         "507上课提醒：15分钟后是老师甲、老师乙老师的测试课程，"
         "上课时间为16:10-18:00，班级为测试班，请注意安排实验室使用时间。"
+    )
+
+
+def test_subscribed_teachers_are_listed_first() -> None:
+    assert ordered_teachers(("老师甲", "老师乙", "老师丙"), {"老师乙"}) == (
+        "老师乙",
+        "老师甲",
+        "老师丙",
     )
