@@ -18,11 +18,11 @@ HELP_TEXT = (
     "/unbind cf [codeforces_id]: 解绑CF账号\n"
     "/list cf: 列出自己绑定的CF账号\n"
     "/listall cf: 列出所有人绑定的CF账号\n"
-    "/help tsugu: 查看 Tsugu / BanG Dream 指令"
+    "/help tsugu: 查看 Tsugu 指令"
 )
 
 TSUGU_HELP_TEXT = (
-    "Tsugu / BanG Dream 指令：\n"
+    "Tsugu 指令：\n"
     "玩家：/绑定玩家 [服务器]、/玩家状态、/查玩家 <ID> [服务器]\n"
     "资料：/查卡 <关键词>、/查卡面 <ID>、/查角色 <关键词>、/查活动 <关键词>\n"
     "歌曲：/查曲 <关键词>、/查谱面 <曲目ID> [难度]、/随机曲 <条件>、/查询分数表 <服务器>\n"
